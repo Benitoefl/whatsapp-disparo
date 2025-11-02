@@ -1,0 +1,16 @@
+# Arquivos gerados automaticamente pelo Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ambientes virtuais
+env/
+venv/
+
+# Dados sensíveis (planilhas, informações de clientes, etc.)
+data/Disparo.xlsx
+
+# Arquivos do sistema (Windows e macOS)
+.DS_Store
+Thumbs.db

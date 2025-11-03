@@ -10,9 +10,6 @@ whatsapp-disparo/
 ├── requirements.txt
 └── README.md
 
-bash
-Copiar código
-
 ## 🚀 Como usar
 
 1. Clone o repositório:
@@ -20,16 +17,10 @@ Copiar código
    git clone https://github.com/seu-usuario/whatsapp-disparo.git
    cd whatsapp-disparo
 Instale as dependências:
-
-bash
-Copiar código
 pip install -r requirements.txt
 Coloque sua planilha em data/Disparo.xlsx.
 
 Execute:
-
-bash
-Copiar código
 python main.py
 O script abrirá o WhatsApp Web, enviará a mensagem personalizada e fechará a aba automaticamente.
 

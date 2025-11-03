@@ -11,14 +11,8 @@ PLANILHA = "data/Disparo.xlsx"
 
 MENSAGEM_PADRAO = (
     "Olá {saudacao}\n"
-    "Meu nome é Paula Castro, sou assistente comercial do escritório Laécio Aguiar Advogados Associados.\n\n"
-    "Identificamos que foi ajuizada uma ação trabalhista contra a empresa {empresa}, inscrita no CNPJ {cnpj}.\n"
-    "A audiência já possui data marcada para {data_audiencia}.\n\n"
-    "O processo foi movido por {reclamante}, e, se desejar, posso lhe encaminhar os detalhes completos da ação, "
-    "como os pedidos, valores e documentos, sem qualquer custo ou compromisso.\n\n"
-    "É importante agir com rapidez, pois em muitos casos a notificação judicial demora a ser recebida pela empresa, "
-    "o que pode gerar prejuízos se a audiência ocorrer sem defesa constituída.\n\n"
-    "Gostaria que eu lhe enviasse as informações completas sobre essa ação?"
+    "Meu nome é Fulano de tal, sou do comercial da Startup Flow.\n\n"
+    "Identificamos que sua {empresa}, inscrita no CNPJ {cnpj}, está com uma demanda que podemos ajudar.\n"
 )
 
 TEMPO_ABRIR_CONVERSA = 12
@@ -42,10 +36,8 @@ def ler_planilha(caminho: str) -> pd.DataFrame:
     mapeamento = {
         "EMPRESA": ["EMPRESA"],
         "SOCIO": ["SOCIO", "SOCIO"],
-        "RECLAMANTE": ["RECLAMANTE"],
         "TELEFONE": ["TELEFONE", "FONE", "CELULAR"],
         "CNPJ": ["CNPJ"],
-        "DATA DE AUDIENCIA": ["DATA DE AUDIENCIA", "DATA AUDIENCIA", "DATA AUDIENCIA"]
     }
 
     colunas_encontradas = {
@@ -71,7 +63,6 @@ def enviar_mensagens(df: pd.DataFrame) -> None:
         cnpj = str(linha["CNPJ"]).strip()
         reclamante = str(linha["RECLAMANTE"]).strip()
         socio = str(linha.get("SOCIO", "")).strip()
-        data_audiencia = formatar_data(linha["DATA DE AUDIENCIA"])
 
         telefones = re.split(r"[;/]+", str(linha["TELEFONE"]).strip())
         telefones = [t.strip() for t in telefones if t.strip()]
@@ -82,9 +73,7 @@ def enviar_mensagens(df: pd.DataFrame) -> None:
                 saudacao=saudacao,
                 empresa=empresa,
                 cnpj=cnpj,
-                reclamante=reclamante,
                 socio=socio,
-                data_audiencia=data_audiencia,
             )
 
             url = f"https://web.whatsapp.com/send?phone={telefone}&text={quote_plus(mensagem)}"
@@ -99,16 +88,6 @@ def enviar_mensagens(df: pd.DataFrame) -> None:
             pyautogui.hotkey('ctrl', 'w')
 
     print("\n✅ Todos os envios foram concluídos com sucesso!")
-
-
-def formatar_data(data) -> str:
-    """Formata data para DD-MM-YYYY."""
-    if pd.isna(data):
-        return ""
-    try:
-        return pd.to_datetime(data).strftime("%d-%m-%Y")
-    except Exception:
-        return str(data)
 
 
 if __name__ == "__main__":
